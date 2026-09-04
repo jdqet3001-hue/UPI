@@ -32,14 +32,16 @@ answer = input(
 
 
 if answer in ("custom", "3"):
-    manual_setup = input("Did you already run manualpath_SETUP.py? ")
+    manual_setup = input("Did you already run manualpath_SETUP.py? (y/n)")
 
-    if manual_setup == "no":
+    if manual_setup in("no", "n"):
         print("Please run manualpath_SETUP.py first to make custom install")
-    with open("pathloc.txt", "r", encoding="utf-8") as file:
-        content = file.read()
-        time.sleep(1)
-        shutil.copy(file_path, content)
+
+    else:
+            with open("pathloc.txt", "r", encoding="utf-8") as file:
+            content = file.read()
+            time.sleep(1)
+            shutil.copy(file_path, content)
 
 if answer in ("windows", "1"):
     shutil.copy(file_path, "C:\\Windows\\System32")
