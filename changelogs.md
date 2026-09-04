@@ -6,3 +6,6 @@ initial release
 
 ## 1.0.1
 small fix for manual PATH setup
+
+## 1.0.2
+also minor fixes
