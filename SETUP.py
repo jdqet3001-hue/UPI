@@ -3,15 +3,16 @@ import os
 import time
 import sys
 
+#yeah this admin function was taken out from a stack overflow thing
 
 
 def is_admin():
     try:
-        # Check for Linux/macOS
+        
         if hasattr(os, 'getuid'):
             return os.getuid() == 0
         
-        # Check for Windows
+        
         import ctypes
         return ctypes.windll.shell32.IsUserAnAdmin() != 0
     except Exception:
