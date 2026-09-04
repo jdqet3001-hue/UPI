@@ -4,5 +4,5 @@ initial release
 -install option on darwin, linux and windows
 -custom install for other systems
 
-## 1.01
+## 1.0.1
 small fix for manual PATH setup
