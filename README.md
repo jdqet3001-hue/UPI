@@ -5,7 +5,9 @@ python obviously duh
 ## how to install
 just follow the instructions in the setup, its pretty straightforward, in case your system isnt there use the custom install option
 
-## NEXT UPDATE:
+## NEXT UPDATE (working on it rn :D ):
 
 ### 3.0
 -uninstaller
+-backend renovation
+-and more...
