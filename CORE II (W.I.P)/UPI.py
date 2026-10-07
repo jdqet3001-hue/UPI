@@ -49,9 +49,9 @@ def start():
     else:
           answer_start = input("pathloc wasnt found, do you wanna create it? (y/n)\n")
           # sorry we ran out of budget so please dont type in capitals
-          if answer_start == "y":
+          if answer_start.lower() == "y":
                 create_pathloc()
-          elif answer_start == "n":
+          elif answer_start.lower() == "n":
                 print("ok :(")
                 sys.exit()
 
