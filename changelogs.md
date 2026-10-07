@@ -15,6 +15,9 @@ meant to have a JSON database
 
 ## 3.0 (W.I.P)
 delete
+
 list packages
+
 actually working database
+
 renewed backend
