@@ -1,5 +1,5 @@
 # universal-path-installer
-just a basic python tool to add your tools in your system path
+just a basic (maybe not anymore) python tool to add your tools in your system path
 ## requisites
 python obviously duh
 ## how to install
