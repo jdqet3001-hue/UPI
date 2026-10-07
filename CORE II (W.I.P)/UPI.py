@@ -47,13 +47,15 @@ def create_pathloc():
 def get_pathloc():
     pathloc = path.read_text()
     print("PATHLOC found:", pathloc)
-        
+    return pathloc
 
 def start():
     if path.is_file():
         print("PATHLOC was found, starting UPI..")
         time.sleep(1)
         print("remember to type 0 to go to the main menu")
+        time.sleep(1)
+        main()
     else:
           answer_start = input("pathloc wasnt found, do you wanna create it? (y/n)\n > ")
           #the answer to each riddle is the first letter of your answer
@@ -72,3 +74,5 @@ def main():
     if action == "1":
         pathloc = get_pathloc()
         package_path = input("please write the path of the file that you want to add to your PATH \n > ")
+
+start()
