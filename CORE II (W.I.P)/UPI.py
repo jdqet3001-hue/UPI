@@ -87,11 +87,10 @@ def does_db_exist():
         pass #nothing ever happens
 
 def install():
-    data = get_db()
+    does_db_exist()
     pathloc = get_pathloc()
     package_path = input("please write the path of the file that you want to add to your PATH \n > ")
-    if package_path == "0":
-        main()
+
 
     filename = Path(package_path).name
     does_exist = Path(package_path).is_file()
@@ -120,7 +119,7 @@ def install():
             file.seek(0)
             json.dump(data, file, indent=4)
             print("done") #we ran out of budget to validate the json install, im not a slave, but if SHE told me to do i'd do it
-            main()
+
 
 
     else:
@@ -137,9 +136,7 @@ def List():
         print("Source:", package["source"])
         print("Location:", package["location"])
         print("Final:", package["final"])
-    gotostart = input("\n\n do you want to go back to the main menu? (y/n)\n >")
-    if gotostart == "y":
-        main()
+
 
 def uninstall():
     with open(database, "r+") as file:
@@ -158,13 +155,8 @@ def uninstall():
                 file.truncate()
                 print("file removed from database, removing it now from system..")
                 Path(final).unlink()
-                main()
-        
-def get_db():
-    global db
 
-    with open(database, "r") as file:
-        db = json.load(file)
+        
 
 def main():
     action = input("what do you want to do today boss: \n 1.Install a package to PATH (ig) \n 2.List your packages \n 3.Uninstall packages \n 4.Edit pathloc \n 0.exit \n > ")
