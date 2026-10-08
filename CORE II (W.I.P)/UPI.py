@@ -87,6 +87,7 @@ def does_db_exist():
         pass #nothing ever happens
 
 def install():
+    data = get_db()
     does_db_exist()
     pathloc = get_pathloc()
     package_path = input("please write the path of the file that you want to add to your PATH \n > ")
@@ -128,6 +129,7 @@ def install():
         sys.exit(1)
     
 def List():
+    data = get_db()
     with open(database, "r+") as file:
         data = json.load(file)
 
@@ -142,6 +144,7 @@ def List():
         main()
 
 def uninstall():
+    data = get_db()
     with open(database, "r+") as file:
         data = json.load(file)
 
@@ -160,6 +163,11 @@ def uninstall():
                 Path(final).unlink()
                 main()
         
+def get_db():
+    global db
+
+    with open(database, "r") as file:
+        db = json.load(file)
 
 def main():
     action = input("what do you want to do today boss: \n 1.Install a package to PATH (ig) \n 2.List your packages \n 3.Uninstall packages \n 4.Edit pathloc \n 0.exit \n > ")
