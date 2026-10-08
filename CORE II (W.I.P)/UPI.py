@@ -87,7 +87,6 @@ def does_db_exist():
         pass #nothing ever happens
 
 def install():
-    does_db_exist()
     data = get_db()
     pathloc = get_pathloc()
     package_path = input("please write the path of the file that you want to add to your PATH \n > ")
