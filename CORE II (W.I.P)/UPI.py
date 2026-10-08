@@ -6,8 +6,8 @@ import sys
 import shutil
 
 path = Path("pathloc.txt")
-linux_mac = "/usr/local/bin"
-windows = "C:\\Windows\\System32"
+linux_mac = "/usr/local/bin/"
+windows = "C:\\Windows\\System32\\"
 custom = ""
 
 
@@ -19,7 +19,7 @@ def is_admin():
         
 
         import ctypes
-        return ctypes.windll.shell32.IsUserAnAdmin() != 0
+        return ctypes.windll.shell32.IsUserAnAdmin() != 0 #riddle me this (6) 1000mb
     except Exception:
         return False
 
@@ -61,20 +61,65 @@ def start():
           #the answer to each riddle is the first letter of your answer, there are 7 riddles
           if answer_start.lower() == "y":
                 create_pathloc()
+                main()
           elif answer_start.lower() == "n":
                 print("ok :(")
                 sys.exit()
 
+def does_db_exist():
+    db = Path("database.json").is_file()
+    if db != True: #riddle me this (5): she's ___ i need
+        print("db not found, installing..")
+        template = {
+            "format": [
+                {
+                    "is_valid": "true"
+                }
+            ],
+            "packages": [
+                {
+                }
+            ]
+        }
+        json_db = json.dumps(template, indent=4)
+        with open("database.json", "w") as f:
+            f.write(json_db)
+    else:
+        pass #nothing ever happens
+
 def install():
+    does_db_exist()
     pathloc = get_pathloc()
     package_path = input("please write the path of the file that you want to add to your PATH \n > ")
-    
+    filename = Path(package_path).name
     does_exist = Path(package_path).is_file()
+    final = pathloc+filename
     if does_exist == True:
-        print("file found, copying it to PATH..") #riddle me this (1): A self propelleD aNti AirRaFt system tHaT is operated by 2 countries, one where most of its fLaG is greeN aNd bluE, aNd the second one is the inventor of it
+        print("file found, copying it to PATH..") #riddle me this (1): A self propelleD aNti AircRaFt system tHaT is operated by 2 countries, one where most of its fLaG is greeN aNd bluE, aNd the second one is the inventor of it
         result = shutil.copy(package_path, pathloc)
         installed = Path(result).is_file()
         print("installation status:", installed)
+        time.sleep(1)
+        new = {
+                "namefile": filename,
+                "source": package_path,
+                "location": pathloc,
+                "final": final
+            }
+
+        
+        print("adding the new package to the db..")
+        with open("database.json", "r+") as file:
+            data = json.load(file)
+            data["packages"].append(new)
+            print("validating db format..")
+            if data["format"][0]["is_valid"] != "true":
+                print("the db format is invalid, if you suspect that this is a bug/error, please pull an issue in the main repo page")
+            file.seek(0)
+            json.dump(data, file, indent=4)
+            print("done") #we ran out of budget to validate the json install, im not a slave, but if SHE told me to do i'd do it
+
+
     else:
         print("the file wasnt found, please try again")
         sys.exit(1)
@@ -89,6 +134,7 @@ def main():
         print("sorry we ran out of budget, only option that works for now is the first one")
         time.sleep(1)
         sys.exit
-        
 
-install()
+start()
+
+# riddle me this (7): the reason why this text is readable
