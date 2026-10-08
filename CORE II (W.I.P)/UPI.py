@@ -25,7 +25,7 @@ def is_admin():
 
 if is_admin():
     print("starting setup")
-    time.sleep(1.5)
+    time.sleep(0.5)
 else:
     print("rerun the setup as admin")
     time.sleep(5)
@@ -53,8 +53,6 @@ def start():
     if path.is_file():
         print("PATHLOC was found, starting UPI..")
         time.sleep(1) #riddle me this (3): +12
-        print("remember to type 0 to go to the main menu")
-        time.sleep(1)
         main()
     else:
           answer_start = input("pathloc wasnt found, do you wanna create it? (y/n)\n > ")
@@ -77,8 +75,7 @@ def does_db_exist():
                 }
             ],
             "packages": [
-                {
-                }
+
             ]
         }
         json_db = json.dumps(template, indent=4)
@@ -91,6 +88,9 @@ def install():
     does_db_exist()
     pathloc = get_pathloc()
     package_path = input("please write the path of the file that you want to add to your PATH \n > ")
+    if package_path == "0":
+        main()
+
     filename = Path(package_path).name
     does_exist = Path(package_path).is_file()
     final = pathloc+filename
@@ -118,22 +118,62 @@ def install():
             file.seek(0)
             json.dump(data, file, indent=4)
             print("done") #we ran out of budget to validate the json install, im not a slave, but if SHE told me to do i'd do it
+            main()
 
 
     else:
         print("the file wasnt found, please try again")
         sys.exit(1)
     
+def List():
+    with open("database.json", "r+") as file:
+        data = json.load(file)
+
+    for package in data["packages"]:
+        print("\n")
+        print("Name:", package["namefile"])
+        print("Source:", package["source"])
+        print("Location:", package["location"])
+        print("Final:", package["final"])
+    gotostart = input("\n\n do you want to go back to the main menu? (y/n)\n >")
+    if gotostart == "y":
+        main()
+
+def uninstall():
+    with open("database.json", "r+") as file:
+        data = json.load(file)
+
+        uninstall_action = input("type the filename of the package that you want to uninstall > ")
+
+        for package in data["packages"]:
+            name = package["namefile"]
+            final = package["final"]
+            if uninstall_action == name:
+                data["packages"].remove(package)
+
+                file.seek(0)
+                json.dump(data, file, indent=4)
+                file.truncate()
+                print("file removed from database, removing it now from system..")
+                Path(final).unlink()
+                main()
+        
 
 def main():
-    action = input("what do you want to do today boss: \n 1.Install a package to PATH (ig) \n 2.List your packages \n 3.Uninstall packages \n 4.Edit pathloc \n > ")
+    action = input("what do you want to do today boss: \n 1.Install a package to PATH (ig) \n 2.List your packages \n 3.Uninstall packages \n 4.Edit pathloc \n 0.exit \n > ")
                         #riddle me this (2): reAd the first riddle VERY well
     if action == "1":
         install()
-    else:
-        print("sorry we ran out of budget, only option that works for now is the first one")
+    elif action == "2":
+        List()
+    elif action == "3":
+        uninstall() 
+    elif action == "4":
+        create_pathloc()
+    elif action == "0":
+        print("bye")
         time.sleep(1)
-        sys.exit
+        sys.exit(0)
 
 start()
 
