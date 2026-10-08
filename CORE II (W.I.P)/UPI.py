@@ -3,7 +3,7 @@ import time
 import json
 from pathlib import Path
 import sys
-import subprocess
+import shutil
 
 path = Path("pathloc.txt")
 linux_mac = "/usr/local/bin"
@@ -52,27 +52,43 @@ def get_pathloc():
 def start():
     if path.is_file():
         print("PATHLOC was found, starting UPI..")
-        time.sleep(1)
+        time.sleep(1) #riddle me this (3): +12
         print("remember to type 0 to go to the main menu")
         time.sleep(1)
         main()
     else:
           answer_start = input("pathloc wasnt found, do you wanna create it? (y/n)\n > ")
-          #the answer to each riddle is the first letter of your answer
+          #the answer to each riddle is the first letter of your answer, there are 7 riddles
           if answer_start.lower() == "y":
                 create_pathloc()
           elif answer_start.lower() == "n":
                 print("ok :(")
                 sys.exit()
 
-
+def install():
+    pathloc = get_pathloc()
+    package_path = input("please write the path of the file that you want to add to your PATH \n > ")
+    
+    does_exist = Path(package_path).is_file()
+    if does_exist == True:
+        print("file found, copying it to PATH..") #riddle me this (1): A self propelleD aNti AirRaFt system tHaT is operated by 2 countries, one where most of its fLaG is greeN aNd bluE, aNd the second one is the inventor of it
+        result = shutil.copy(package_path, pathloc)
+        installed = Path(result).is_file()
+        print("installation status:", installed)
+    else:
+        print("the file wasnt found, please try again")
+        sys.exit(1)
     
 
 def main():
     action = input("what do you want to do today boss: \n 1.Install a package to PATH (ig) \n 2.List your packages \n 3.Uninstall packages \n 4.Edit pathloc \n > ")
-                        #riddle me this (1): A self propelleD aNti AirRaFt system tHaT is operated by 2 countries, one where most of its fLaG is greeN aNd bluE, aNd the second one is the inventor of it
+                        #riddle me this (2): reAd the first riddle VERY well
     if action == "1":
-        pathloc = get_pathloc()
-        package_path = input("please write the path of the file that you want to add to your PATH \n > ")
+        install()
+    else:
+        print("sorry we ran out of budget, only option that works for now is the first one")
+        time.sleep(1)
+        sys.exit
+        
 
-start()
+install()
