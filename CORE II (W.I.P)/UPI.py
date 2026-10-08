@@ -5,7 +5,9 @@ from pathlib import Path
 import sys
 import shutil
 
-path = Path("pathloc.txt")
+base_path = Path(__file__).parent
+path = base_path / "pathloc.txt"
+database = base_path / "database.json"
 linux_mac = "/usr/local/bin/"
 windows = "C:\\Windows\\System32\\"
 custom = ""
@@ -65,7 +67,7 @@ def start():
                 sys.exit()
 
 def does_db_exist():
-    db = Path("database.json").is_file()
+    db = database.is_file()
     if db != True: #riddle me this (5): she's ___ i need
         print("db not found, installing..")
         template = {
@@ -79,7 +81,7 @@ def does_db_exist():
             ]
         }
         json_db = json.dumps(template, indent=4)
-        with open("database.json", "w") as f:
+        with open(database, "w") as f:
             f.write(json_db)
     else:
         pass #nothing ever happens
@@ -109,7 +111,7 @@ def install():
 
         
         print("adding the new package to the db..")
-        with open("database.json", "r+") as file:
+        with open(database, "r+") as file:
             data = json.load(file)
             data["packages"].append(new)
             print("validating db format..")
@@ -126,7 +128,7 @@ def install():
         sys.exit(1)
     
 def List():
-    with open("database.json", "r+") as file:
+    with open(database, "r+") as file:
         data = json.load(file)
 
     for package in data["packages"]:
@@ -140,7 +142,7 @@ def List():
         main()
 
 def uninstall():
-    with open("database.json", "r+") as file:
+    with open(database, "r+") as file:
         data = json.load(file)
 
         uninstall_action = input("type the filename of the package that you want to uninstall > ")
