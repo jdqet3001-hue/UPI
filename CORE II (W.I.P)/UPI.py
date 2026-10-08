@@ -136,6 +136,8 @@ def List():
         print("Source:", package["source"])
         print("Location:", package["location"])
         print("Final:", package["final"])
+    time.sleep(2)
+    main()
 
 
 def uninstall():
@@ -155,7 +157,8 @@ def uninstall():
                 file.truncate()
                 print("file removed from database, removing it now from system..")
                 Path(final).unlink()
-
+                print("done")
+                time.sleep(2)
         
 
 def main():
